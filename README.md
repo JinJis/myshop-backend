@@ -5,6 +5,16 @@ MyShop Backend
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
+## API surface
+
+- Contract from the frontend is implemented under `/api/…` with session-cookie auth.
+- Start a session with `POST /api/auth/login/google` (or apple/naver), inspect with `GET /api/auth/session`, and clear with `POST /api/auth/logout`.
+- Store search, selection, and ingestion flow lives at `/api/stores/*` and `/api/ingestions/*`.
+- Asset review/library endpoints are under `/api/ingestions/:id/assets`, `/api/assets`, and `/api/assets/uploads`.
+- Poster and menu-board generators live at `/api/generations/posters` and `/api/generations/menu-boards`, with styles at `/api/generations/styles`.
+- Profile and linked stores are available at `/api/me` and `/api/stores`.
+- Data is kept in memory for demo/front-end work and resets when the server restarts.
+
 ## Settings
 
 Moved to [settings](https://cookiecutter-django.readthedocs.io/en/latest/1-getting-started/settings.html).

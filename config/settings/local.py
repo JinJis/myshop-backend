@@ -61,5 +61,14 @@ if env("USE_DOCKER") == "yes":
 # https://django-extensions.readthedocs.io/en/latest/installation_instructions.html#configuration
 INSTALLED_APPS += ["django_extensions"]
 
+# CORS
+# ------------------------------------------------------------------------------
+# Allow local frontend (Vite on :5173) to call API/auth endpoints with cookies.
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+CORS_ALLOW_CREDENTIALS = True
+
 # Your stuff...
 # ------------------------------------------------------------------------------
