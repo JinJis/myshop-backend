@@ -1,7 +1,7 @@
 volumes:
   myshop_backend_local_postgres_data: {}
   myshop_backend_local_postgres_data_backups: {}
-  
+
 
 services:
   django:
