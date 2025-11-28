@@ -1,3 +1,4 @@
+from dj_rest_auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -24,11 +25,9 @@ if settings.DEBUG:
 urlpatterns += [
     # API base url
     path("api/", include("config.api_router")),
-    # REST auth (JWT issuing)
-    path("dj-rest-auth/", include("dj_rest_auth.urls")),
-    path("dj-rest-auth/registration/", include("dj_rest_auth.registration.urls")),
-    # Social login (Google)
-    path("dj-rest-auth/google/", GoogleLogin.as_view(), name="google_login"),
+    # Authentication
+    path("api/auth/logout", LogoutView.as_view(), name="rest_logout"),
+    path("api/auth/google/", GoogleLogin.as_view(), name="google_login"),
     # Swagger url
     path("schema/", SpectacularAPIView.as_view(), name="api-schema"),
     path(

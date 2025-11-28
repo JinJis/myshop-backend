@@ -1,7 +1,6 @@
 # ruff: noqa: ERA001, E501
 """Base settings to build other settings files upon."""
 
-from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -309,19 +308,22 @@ SOCIALACCOUNT_PROVIDERS = {
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # Issue/validate JWT access tokens for API clients
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # Supports reading JWTs from auth cookies set by dj-rest-auth
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    # Use drf-spectacular's schema generator for OpenAPI/Swagger
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-    "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": True,
+REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": "myshop-ai-token",
+    "JWT_AUTH_REFRESH_COOKIE": "myshop-ai-refresh-token",
 }
-REST_USE_JWT = True
-JWT_AUTH_COOKIE = "my-app-auth"  # For cookie-based SPA login (optional)
-JWT_AUTH_REFRESH_COOKIE = "my-refresh-token"
+
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
 # CORS_URLS_REGEX = r"^/api/.*$"

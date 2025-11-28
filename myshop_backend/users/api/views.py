@@ -20,6 +20,12 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
         assert isinstance(self.request.user.id, int)
         return self.queryset.filter(id=self.request.user.id)
 
+    def get_object(self):
+        """Always operate on the authenticated user; no pk lookup required."""
+        user = self.request.user
+        self.check_object_permissions(self.request, user)
+        return user
+
     @action(detail=False)
     def me(self, request):
         serializer = UserSerializer(request.user, context={"request": request})
